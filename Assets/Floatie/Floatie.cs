@@ -2,7 +2,7 @@
 
 public class Floatie : MonoBehaviour {
 
-    public float distanceFromHead = 0.5f;
+    public float distanceFromHead = 0.6f;
     public bool drawLine = false;
     [Range(0, 1)] public float positionLerpFactor = 0.02f;
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
@@ -21,15 +21,23 @@ public class Floatie : MonoBehaviour {
     private Material lineMaterial;
 
 
-    public static void Spawn(GameObject prefab, Transform attentionPoint, float distanceFromHead = 0.5f)
+    public static Floatie Spawn(GameObject prefab, Transform attentionPoint = null, float distanceFromHead = 0.5f)
     {
         // TODO see if we need container object, to support animation
         var go = Instantiate(prefab);
-        var floatie = go.AddComponent<Floatie>();
-        floatie.attentionPoint = attentionPoint;
+
+        var floatie = go.GetComponent<Floatie>();
+        if (!floatie) go.AddComponent<Floatie>();
+        if (floatie.attentionPoint == null) floatie.attentionPoint = attentionPoint;
+        return floatie;
     }
 
-	void Start () {
+    public void Destroy()
+    {
+        Destroy(gameObject);  // TODO this'll need to support waiting for closing animation to finish
+    }
+
+    void Start () {
         if (!head) head = Camera.main.transform;
 
         // try to find starting point of the line via hardcoded name, fallback to center
