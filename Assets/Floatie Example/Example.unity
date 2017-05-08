@@ -235,35 +235,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!21 &324370161
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-    - first:
-        name: _MainTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - first:
-        name: PixelSnap
-      second: 0
-    m_Colors:
-    - first:
-        name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &497752451
 Prefab:
   m_ObjectHideFlags: 0
@@ -306,16 +277,16 @@ Prefab:
     - target: {fileID: 3380982, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 561408082}
+      objectReference: {fileID: 1626574492}
     - target: {fileID: 2348914, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 324370161}
+      objectReference: {fileID: 2117539180}
     m_RemovedComponents:
     - {fileID: 11420968, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
   m_IsPrefabParent: 0
---- !u!43 &561408082
+--- !u!43 &1626574492
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -509,7 +480,7 @@ Prefab:
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
@@ -539,22 +510,22 @@ Prefab:
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.419
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.038
       objectReference: {fileID: 0}
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 28.288
       objectReference: {fileID: 0}
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 12.362
       objectReference: {fileID: 0}
     - target: {fileID: 224211054323994994, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
         type: 2}
@@ -591,6 +562,45 @@ Prefab:
       propertyPath: attentionPoint
       value: 
       objectReference: {fileID: 107168436}
+    - target: {fileID: 224980967634656880, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 224980967634656880, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.53
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0276c89a9fcaec44e81dbb62bd2ff7e0, type: 2}
   m_IsPrefabParent: 0
+--- !u!21 &2117539180
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: PixelSnap
+      second: 0
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}

@@ -6,6 +6,8 @@ public class Floatie : MonoBehaviour {
     public bool drawLine = false;
     [Range(0, 1)] public float positionLerpFactor = 0.02f;
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
+    [Tooltip("Amout to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
+    [Range(0, 1)] public float offsetFactor = 0.25f;
 
     public float lineWidth = 0.001f;
     public Color lineColor = Color.gray;
@@ -48,8 +50,15 @@ public class Floatie : MonoBehaviour {
 
     void UpdateFloatie()
     {
-        var targetPos = head.position + head.forward * distanceFromHead;
+        var straightAheadDirectionMult = head.forward * distanceFromHead;
+        var targetPos = head.position + straightAheadDirectionMult;
         var targetLook = transform.position + head.forward;
+
+        // slightly offset in the direction of attention point
+        var attentionDirection = attentionPoint ? attentionPoint.position - head.position : straightAheadDirectionMult;
+        var rotToPointOnSphere = Quaternion.FromToRotation(head.forward, attentionDirection);
+        var lerpRot = Quaternion.Lerp(Quaternion.identity, rotToPointOnSphere, offsetFactor);
+        targetPos = lerpRot * (head.forward) + head.position;
 
         var lerpPos = Vector3.Lerp(transform.position, targetPos, positionLerpFactor);
         var lerpLook = Vector3.Lerp(transform.position + transform.forward, targetLook, rotationLerpFactor);
