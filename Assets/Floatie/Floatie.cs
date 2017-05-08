@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class Floatie : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class Floatie : MonoBehaviour {
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
     [Tooltip("Amout to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
     [Range(0, 1)] public float offsetFactor = 0.25f;
+    public bool spawnInFrontOfCam = true;
 
     public float lineWidth = 0.001f;
     public Color lineColor = Color.gray;
@@ -21,7 +23,7 @@ public class Floatie : MonoBehaviour {
     private Material lineMaterial;
 
 
-    public static Floatie Spawn(GameObject prefab, Transform attentionPoint = null, float distanceFromHead = 0.5f)
+    public static Floatie Spawn(GameObject prefab, Transform attentionPoint = null, float distanceFromHead = 0.5f, bool spawnInFrontOfCam = true)
     {
         // TODO see if we need container object, to support animation
         var go = Instantiate(prefab);
@@ -29,12 +31,14 @@ public class Floatie : MonoBehaviour {
         var floatie = go.GetComponent<Floatie>();
         if (!floatie) go.AddComponent<Floatie>();
         if (floatie.attentionPoint == null) floatie.attentionPoint = attentionPoint;
+        floatie.spawnInFrontOfCam = spawnInFrontOfCam;
         return floatie;
     }
 
-    public void Destroy()
+    public virtual void Destroy()
     {
-        Destroy(gameObject);  // TODO this'll need to support waiting for closing animation to finish
+        // override this method if you need to e.g. wait for animation to finish
+        Destroy(gameObject);
     }
 
     void Start () {
@@ -49,6 +53,12 @@ public class Floatie : MonoBehaviour {
         line.receiveShadows = false;
         lineMaterial = new Material(Shader.Find("Standard"));
         line.material = lineMaterial;
+
+        if (spawnInFrontOfCam)
+        {
+            transform.position = head.position + head.forward * distanceFromHead;
+            transform.LookAt(transform.position + head.forward, Vector3.up);
+        }
 	}
 	
 	void Update () {
