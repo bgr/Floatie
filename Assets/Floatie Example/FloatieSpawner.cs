@@ -10,7 +10,7 @@ public class FloatieSpawner : MonoBehaviour {
 
     void Start()
     {
-        Debug.Log("Press any key to create a floatie");
+        Debug.LogWarning("Press any key to create a floatie");
     }
 
     // Update is called once per frame
@@ -20,15 +20,15 @@ public class FloatieSpawner : MonoBehaviour {
             switch (mode++ % 3)
             {
                 case 0:
-                    Debug.Log("Creating a floatie without attention point");
+                    Debug.Log("(1/3)\nCreating a floatie without attention point");
                     floatie = Floatie.Spawn(prefabToUseAsFloatie);
                     break;
                 case 1:
-                    Debug.Log("Set the cube in the scene as attention point, line points to it");
+                    Debug.Log("(2/3)\nSet the cube in the scene as attention point, line points to it");
                     floatie.attentionPoint = attentionPoint;
                     break;
                 case 2:
-                    Debug.Log("Destroyed the floatie");
+                    Debug.Log("(3/3)\nDestroyed the floatie");
                     floatie.Destroy();
                     floatie = null;
                     break;
