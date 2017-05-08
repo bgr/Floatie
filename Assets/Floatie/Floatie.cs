@@ -101,6 +101,7 @@ public class Floatie : MonoBehaviour {
         line.enabled = true;
 
         lineMaterial.color = lineColor;
+        lineMaterial.SetColor("_EmissionColor", lineColor);
 #if UNITY_5_5_OR_NEWER
         line.startColor = lineColor;
         line.endColor = lineColor;
