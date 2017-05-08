@@ -13,8 +13,6 @@ public class FloatieWithAnimation : Floatie {
         var anim = GetComponentInChildren<Animator>();
         if (anim)
         {
-            Debug.Log(anim);
-            Debug.Log(anim.GetBool("Open"));
             anim.SetBool("Open", false);
         }
 
