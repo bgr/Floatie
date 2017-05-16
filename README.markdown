@@ -1,3 +1,8 @@
+# About `git_subtree_compatibility` branch
+
+ProjectSettings and examples are removed in order not to litter the project
+you choose to import Floatie into, the code itself is unchanged.
+
 # Floating tooltip for Unity
 
 See the [example video](https://gfycat.com/SleepyRealBlacknorwegianelkhound)
