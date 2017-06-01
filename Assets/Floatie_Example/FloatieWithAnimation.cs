@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class FloatieWithAnimation : Floatie {
 
-    public float waitBeforeDestroy = 1f;
-
-    public override void Destroy()
+    public override void OnAboutToBeDestroyed()
     {
         drawLine = false;
 
@@ -15,8 +13,5 @@ public class FloatieWithAnimation : Floatie {
         {
             anim.SetBool("Open", false);
         }
-
-        Destroy(gameObject, waitBeforeDestroy);
     }
-
 }
