@@ -226,15 +226,40 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  rotationLerpFactor: 0.08
+  angleToRotationLerp:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.03
+      inSlope: 0.00031895316
+      outSlope: 0.00031895316
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 180
+      value: 0.2
+      inSlope: 0.0023504759
+      outSlope: 0.0023504759
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  worldUpRotationLerp: 0.5
   offsetFactor: 0.2
   spawnInFrontOfCam: 1
+  dismissTime: 0.8
+  dismissAngle: 30
   lineWidth: 0.0022
   lineColor: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
+  waitBeforeDestroy: 1
   attentionPoint: {fileID: 0}
   head: {fileID: 0}
   lineStartPoint: {fileID: 224980967634656880}
-  waitBeforeDestroy: 1
+  Dismissed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!222 &222649547214654592
 CanvasRenderer:
   m_ObjectHideFlags: 1
