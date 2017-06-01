@@ -208,11 +208,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceFromHead: 0.6
   drawLine: 1
-  positionLerpFactor: 0.02
-  rotationLerpFactor: 0.2
-  offsetFactor: 0.25
+  angleToPositionLerp:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.01
+      inSlope: 0.00037481717
+      outSlope: 0.00037481717
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 180
+      value: 0.2
+      inSlope: 0.0019410244
+      outSlope: 0.0019410244
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  rotationLerpFactor: 0.08
+  offsetFactor: 0.2
   spawnInFrontOfCam: 1
-  lineWidth: 0.0015
+  lineWidth: 0.0022
   lineColor: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   attentionPoint: {fileID: 0}
   head: {fileID: 0}

@@ -5,7 +5,8 @@ public class Floatie : MonoBehaviour {
 
     public float distanceFromHead = 0.6f;
     public bool drawLine = false;
-    [Range(0, 1)] public float positionLerpFactor = 0.02f;
+    [Tooltip("Maps the angle on x-axis [0, 180] to floatie's positional movement lerp factor on y-axis [0, 1]")]
+    public AnimationCurve angleToPositionLerp;
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
     [Tooltip("Amount to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
     [Range(0, 1)] public float offsetFactor = 0.25f;
@@ -71,6 +72,11 @@ public class Floatie : MonoBehaviour {
         var straightAheadDirectionMult = head.forward * distanceFromHead;
         var targetPos = head.position + straightAheadDirectionMult;
         var targetLook = transform.position + head.forward;
+
+        // position lerp factor depends on the angle between a point straight ahead and current floatie position
+        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, transform.position - head.position);
+        var angleDiff = Mathf.Clamp(Quaternion.Angle(Quaternion.identity, headToFloatieRotation), 0, 180);
+        var positionLerpFactor = angleToPositionLerp.Evaluate(angleDiff);
 
         // slightly offset in the direction of attention point
         var attentionDirection = attentionPoint ? attentionPoint.position - head.position : straightAheadDirectionMult;
