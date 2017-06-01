@@ -5,27 +5,46 @@ public class Floatie : MonoBehaviour {
 
     public float distanceFromHead = 0.6f;
     public bool drawLine = false;
-    [Range(0, 1)] public float positionLerpFactor = 0.02f;
+
+    [Tooltip("Maps the angle between camera forward direction and direction to current floatie position (x-axis [0, 180]) to lerp factor of centering movement (y-axis [0, 1])")]
+    public AnimationCurve angleToPositionLerp;
+
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
-    [Tooltip("Amout to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
+
+    [Tooltip("Amount to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
     [Range(0, 1)] public float offsetFactor = 0.25f;
+
     public bool spawnInFrontOfCam = true;
+
+    [Tooltip("Destroy floatie after camera had been approximately looking at attention point for this amount of time")]
+    public float dismissTime = 1.2f;
+
+    [Tooltip("Conic angle to consider that camera is looking at the attention point")]
+    public float dismissAngle = 20f;
 
     public float lineWidth = 0.001f;
     public Color lineColor = Color.gray;
 
+    [Tooltip("Time to wait before calling Destroy on floatie game object")]
+    public float waitBeforeDestroy = 1f;
+
     [Header("Optional")]
+
     public Transform attentionPoint;
     public Transform head;
     public Transform lineStartPoint;
 
-    private LineRenderer line;
-    private Material lineMaterial;
+    [Tooltip("Fired when floatie has been destroyed as a result of looking at the attention point")]
+    public UnityEvent Dismissed = new UnityEvent();
+
+    protected LineRenderer line;
+    protected Material lineMaterial;
+    protected float countdown;
+    protected bool destroyingInProgress = false;
 
 
     public static Floatie Spawn(GameObject prefab, Transform attentionPoint = null, float distanceFromHead = 0.5f, bool spawnInFrontOfCam = true)
     {
-        // TODO see if we need container object, to support animation
         var go = Instantiate(prefab);
 
         var floatie = go.GetComponent<Floatie>();
@@ -35,13 +54,23 @@ public class Floatie : MonoBehaviour {
         return floatie;
     }
 
-    public virtual void Destroy()
+    public void Destroy()
     {
-        // override this method if you need to e.g. wait for animation to finish
-        Destroy(gameObject);
+        if (destroyingInProgress) return;
+        destroyingInProgress = true;
+
+        OnAboutToBeDestroyed();
+        Destroy(gameObject, waitBeforeDestroy);
     }
 
-    void Start () {
+    public virtual void OnAboutToBeDestroyed()
+    {
+        // override this method with custom logic e.g. if you need to play a destroying
+        // animation (used in combination with waitBeforeDestroy to allow animation to finish)
+    }
+
+    void Start ()
+    {
         if (!head) head = Camera.main.transform;
 
         // try to find starting point of the line via hardcoded name, fallback to center
@@ -59,18 +88,27 @@ public class Floatie : MonoBehaviour {
             transform.position = head.position + head.forward * distanceFromHead;
             transform.LookAt(transform.position + head.forward, Vector3.up);
         }
-	}
-	
-	void Update () {
+
+        countdown = dismissTime;
+    }
+
+    void Update ()
+    {
         UpdateFloatie();
         UpdateLine();
-	}
+        if (attentionPoint) UpdateDismiss();
+    }
 
     void UpdateFloatie()
     {
         var straightAheadDirectionMult = head.forward * distanceFromHead;
         var targetPos = head.position + straightAheadDirectionMult;
         var targetLook = transform.position + head.forward;
+
+        // position lerp factor depends on the angle between a point straight ahead and current floatie position
+        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, transform.position - head.position);
+        var angleDiff = Mathf.Clamp(Quaternion.Angle(Quaternion.identity, headToFloatieRotation), 0, 180);
+        var positionLerpFactor = angleToPositionLerp.Evaluate(angleDiff);
 
         // slightly offset in the direction of attention point
         var attentionDirection = attentionPoint ? attentionPoint.position - head.position : straightAheadDirectionMult;
@@ -114,5 +152,24 @@ public class Floatie : MonoBehaviour {
 
         line.SetPosition(0, lineStartPoint.position);
         line.SetPosition(1, attentionPoint.position);
+    }
+
+    void UpdateDismiss()
+    {
+        if (destroyingInProgress) return;
+
+        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, attentionPoint.position - transform.position);
+        var angleDiff = Mathf.Clamp(Quaternion.Angle(Quaternion.identity, headToFloatieRotation), 0, 180);
+
+        if (angleDiff <= dismissAngle)
+        {
+            countdown -= Time.deltaTime;
+        }
+
+        if (countdown <= 0)
+        {
+            Dismissed.Invoke();
+            Destroy();
+        }
     }
 }
