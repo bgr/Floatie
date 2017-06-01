@@ -7,7 +7,7 @@ public class Floatie : MonoBehaviour {
     public bool drawLine = false;
     [Range(0, 1)] public float positionLerpFactor = 0.02f;
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
-    [Tooltip("Amout to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
+    [Tooltip("Amount to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
     [Range(0, 1)] public float offsetFactor = 0.25f;
     public bool spawnInFrontOfCam = true;
 
