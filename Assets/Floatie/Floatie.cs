@@ -5,7 +5,7 @@ public class Floatie : MonoBehaviour {
 
     public float distanceFromHead = 0.6f;
     public bool drawLine = false;
-    [Tooltip("Maps the angle on x-axis [0, 180] to floatie's positional movement lerp factor on y-axis [0, 1]")]
+    [Tooltip("Maps the angle between camera forward direction and direction to current floatie position (x-axis [0, 180]) to lerp factor of centering movement (y-axis [0, 1])")]
     public AnimationCurve angleToPositionLerp;
     [Range(0, 1)] public float rotationLerpFactor = 0.2f;
     [Tooltip("Amount to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
