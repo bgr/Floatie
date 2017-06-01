@@ -26,7 +26,6 @@ public class Floatie : MonoBehaviour {
 
     public static Floatie Spawn(GameObject prefab, Transform attentionPoint = null, float distanceFromHead = 0.5f, bool spawnInFrontOfCam = true)
     {
-        // TODO see if we need container object, to support animation
         var go = Instantiate(prefab);
 
         var floatie = go.GetComponent<Floatie>();
