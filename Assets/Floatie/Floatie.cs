@@ -6,10 +6,14 @@ public class Floatie : MonoBehaviour {
     public float distanceFromHead = 0.6f;
     public bool drawLine = false;
 
-    [Tooltip("Maps the angle between camera forward direction and direction to current floatie position (x-axis [0, 180]) to lerp factor of centering movement (y-axis [0, 1])")]
+    [Tooltip("Maps the angle between camera forward direction and direction to current floatie position (x-axis [0, 180]) to lerp factor of floatie centering movement (y-axis [0, 1])")]
     public AnimationCurve angleToPositionLerp;
 
-    [Range(0, 1)] public float rotationLerpFactor = 0.2f;
+    [Tooltip("Maps the angle between camera forward direction and direction to current floatie position (x-axis [0, 180]) to lerp factor of floatie re-aligning rotation (y-axis [0, 1])")]
+    public AnimationCurve angleToRotationLerp;
+
+    [Tooltip("Percentage to reorient the floatie towards world up direction (as opposed to camera's up direction)")]
+    [Range(0, 1)] public float worldUpRotationLerp = 0.2f;
 
     [Tooltip("Amount to move the floatie towards the attention point in order to draw attention and cause the user to rotate the head towards it")]
     [Range(0, 1)] public float offsetFactor = 0.25f;
@@ -109,6 +113,7 @@ public class Floatie : MonoBehaviour {
         var headToFloatieRotation = Quaternion.FromToRotation(head.forward, transform.position - head.position);
         var angleDiff = Mathf.Clamp(Quaternion.Angle(Quaternion.identity, headToFloatieRotation), 0, 180);
         var positionLerpFactor = angleToPositionLerp.Evaluate(angleDiff);
+        var rotationLerpFactor = angleToRotationLerp.Evaluate(angleDiff);
 
         // slightly offset in the direction of attention point
         var attentionDirection = attentionPoint ? attentionPoint.position - head.position : straightAheadDirectionMult;
@@ -125,7 +130,7 @@ public class Floatie : MonoBehaviour {
         var pushBackPos = lerpPos + head.forward * pushBack;
 
         transform.position = Vector3.Lerp(lerpPos, pushBackPos, 0.4f); // aggresively push back
-        var up = Vector3.Lerp(head.up, Vector3.up, 0.5f); // prevents spinning when looking straight up/down
+        var up = Vector3.Lerp(head.up, Vector3.up, worldUpRotationLerp); // also prevents flipping when looking straight up/down
         transform.LookAt(lerpLook, up);
     }
 
