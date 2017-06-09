@@ -244,7 +244,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  worldUpRotationLerp: 0.5
+  rollLerp: 0.03
+  worldUpRotationTargetPercentage: 0.35
   offsetFactor: 0.2
   spawnInFrontOfCam: 1
   dismissTime: 0.8
