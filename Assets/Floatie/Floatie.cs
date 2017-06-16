@@ -167,7 +167,7 @@ public class Floatie : MonoBehaviour {
     {
         if (destroyingInProgress) return;
 
-        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, attentionPoint.position - transform.position);
+        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, attentionPoint.position - head.position);
         var angleDiff = Mathf.Clamp(Quaternion.Angle(Quaternion.identity, headToFloatieRotation), 0, 180);
 
         if (angleDiff <= dismissAngle)
