@@ -122,7 +122,7 @@ public class Floatie : MonoBehaviour {
         var attentionDirection = attentionPoint ? attentionPoint.position - head.position : straightAheadDirectionMult;
         var rotToPointOnSphere = Quaternion.FromToRotation(head.forward, attentionDirection);
         var lerpRot = Quaternion.Lerp(Quaternion.identity, rotToPointOnSphere, offsetFactor);
-        targetPos = lerpRot * (head.forward) + head.position;
+        targetPos = lerpRot * straightAheadDirectionMult + head.position;
 
         var lerpPos = Vector3.Lerp(transform.position, targetPos, positionLerpFactor);
         var lerpLook = Vector3.Lerp(transform.position + transform.forward, targetLook, rotationLerpFactor);
@@ -167,7 +167,7 @@ public class Floatie : MonoBehaviour {
     {
         if (destroyingInProgress) return;
 
-        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, attentionPoint.position - transform.position);
+        var headToFloatieRotation = Quaternion.FromToRotation(head.forward, attentionPoint.position - head.position);
         var angleDiff = Mathf.Clamp(Quaternion.Angle(Quaternion.identity, headToFloatieRotation), 0, 180);
 
         if (angleDiff <= dismissAngle)
